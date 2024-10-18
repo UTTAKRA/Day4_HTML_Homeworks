@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Interactive Drawing App</title>
+</head>
+<body>
+    <h1>Draw on the Canvas</h1>
+    <canvas id="drawCanvas" width="400" height="400" style="border:1px solid #000;"></canvas>
+
+    <script>
+        var canvas = document.getElementById("drawCanvas");
+        var ctx = canvas.getContext("2d");
+        var drawing = false;
+
+        canvas.addEventListener("mousedown", function() {
+            drawing = true;
+        });
+
+        canvas.addEventListener("mouseup", function() {
+            drawing = false;
+            ctx.beginPath();
+        });
+
+        canvas.addEventListener("mousemove", function(event) {
+            if (!drawing) return;
+            ctx.lineWidth = 2;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = "black";
+            ctx.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+        });
+    </script>
+</body>
+</html>
